@@ -17,11 +17,15 @@ public class MsgServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsgServerApplication.class, args);
 	}
+
 	@Bean
 	public CommandLineRunner messages(MessageRepository mrepository) {
 		return (args) -> {
-			mrepository.save(new Message("Testiviesti", "blue", "@Main", "#testi", 3));
-			mrepository.save(new Message("Terve kaikki!", "green", "@Main", "#tervehdys", 3));
+			mrepository.save(new Message("Testiviesti", "blue", "@Main", "#testi", "Helsinki", 3));
+			mrepository.save(new Message("Mitä tehdä Porissa perjantai iltana?", "#a7ecf2", "@Main", "#tervehdys", "Pori", 3));
+			mrepository.save(new Message("This fake Jodel sucks! What is this bullshit!?", "#3e9cbf", "@Main", "#COPYCAT", "Pori", 3));
+			mrepository.save(new Message("Whaddaya want kiddo", "#3e9cbf", "@Main", "#weirdo", "Korso", 8));
+			mrepository.save(new Message("Kuinka jaksatte opiskella kursseja jotka ei kiinnosta? Jeesiä kaivataan...", "#f26d50", "@opiskelu", "#huuhaa", "Helsinki", 1));
 			System.out.println(mrepository.findAll());
 
 			log.info("Saved a couple of messages");
@@ -32,6 +36,6 @@ public class MsgServerApplication {
 			}
 		};
 
-	}
+	} 
 
 }

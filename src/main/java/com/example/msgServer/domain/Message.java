@@ -1,19 +1,31 @@
 package com.example.msgServer.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+// Class is and entity
 @Entity
+// Class name is table name also
+@Table
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private long messageId;
+    @Column
     private String messageText;
+    @Column
     private String messageColor;
+    @Column
     private String messageChannel;
+    @Column
     private String messageHashtag;
+    @Column
+    private String messageLocation;
+    @Column
     private int messageLikes;
 
     public Message() {
@@ -21,12 +33,13 @@ public class Message {
     }
 
     public Message(String messageText, String messageColor, String messageChannel, String messageHashtag,
-            int messageLikes) {
+            String messageLocation, int messageLikes) {
         super();
         this.setMessageText(messageText);
         this.setMessageColor(messageColor);
         this.setMessageChannel(messageChannel);
         this.setMessageHashtag(messageHashtag);
+        this.setMessageLocation(messageLocation);
         this.setMessageLikes(messageLikes);
     }
 
@@ -65,6 +78,12 @@ public class Message {
     }
     public void setMessageColor(String messageColor) {
         this.messageColor = messageColor;
+    }
+    public String getMessageLocation() {
+        return messageLocation;
+    }
+    public void setMessageLocation(String messageLocation) {
+        this.messageLocation = messageLocation;
     }
 
 

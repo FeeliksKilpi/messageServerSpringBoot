@@ -2,6 +2,9 @@ package com.example.msgServer.web;
 
 import java.util.List;
 
+import javax.persistence.PostUpdate;
+
+import com.example.msgServer.MessageService;
 import com.example.msgServer.domain.Message;
 import com.example.msgServer.domain.MessageRepository;
 
@@ -9,30 +12,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-@Controller
+@RestController
 public class MessageController {
+    // Autowire Service-classs
     @Autowired
-    private MessageRepository mrepository;
+    MessageService messageService;
 
-@RequestMapping(value="/messages", method = RequestMethod.GET)
-public @ResponseBody List<Message> messagesListRest() {
-    return (List <Message>) mrepository.findAll();
+// Get mapping to list all messages
+@CrossOrigin
+@GetMapping("/messages")
+private List<Message> getAllMessages() {
+  return messageService.getAllMessages();
 }
 
+// Get mapping to output spesific message
+@CrossOrigin
+@GetMapping("/message/{messageId}")
+private Message getMessage(@PathVariable("messageId") long messageId) {
+  return messageService.getMessageById(messageId);
+}
+
+// Delete mapping
+@CrossOrigin
+@DeleteMapping("/message/delete/{messageId}")
+private void deleteMessage(@PathVariable("messageId") long messageId) {
+  messageService.delete(messageId);
+}
+
+// Post mapping that post message
+@CrossOrigin
 @PostMapping("/publish")
-  Message newMessage(@RequestBody Message newMessage) {
-    return mrepository.save(newMessage);
-  }
+private long saveMessage(@RequestBody Message message) {
+  messageService.saveOrUpdate(message);
+  return message.getMessageId();
+}
+
+// Put mapping that updates message detail
+@CrossOrigin
+@PutMapping("/message")
+private Message update(@RequestBody Message message) {
+  messageService.saveOrUpdate(message);
+  return message;
+}
 
   /*
 Try post with curl:
-curl -d '{"messageText":"testi", "messageColor":"testi", "messageChannel":"@Testit", "messageHashtag":"#testi", "messageLikes":1}' -H "Content-Type: application/json" -X POST http://localhost:8080/publish
+curl -d '{"messageText":"testi", "messageColor":"testi", "messageChannel":"@Testit", "messageHashtag":"#testi", "messageLocation":"Helsinki", "messageLikes":1}' -H "Content-Type: application/json" -X POST http://localhost:8080/publish
   */
 
-
+ 
 }
