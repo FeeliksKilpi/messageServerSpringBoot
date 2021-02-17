@@ -40,4 +40,12 @@ public void update(Message message, long messageId) {
     msgRepo.save(message);
 }
 
+// Upvote message
+public void upvote(Message message, long messageId) {
+    //Message likedMessage = new Message();
+
+    message.setMessageLikes(message.getMessageLikes() + 1);
+    msgRepo.save(message);
+}
+
 }

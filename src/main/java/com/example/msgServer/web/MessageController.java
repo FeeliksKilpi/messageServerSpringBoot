@@ -58,6 +58,13 @@ private long saveMessage(@RequestBody Message message) {
   return message.getMessageId();
 }
 
+// UPVOTE
+@CrossOrigin
+@PostMapping("/upvote/{messageId}")
+private void upvote(@RequestBody Message message, @PathVariable("messageId") long messageId) {
+  messageService.upvote(message, messageId);
+}
+
 // Put mapping that updates message detail
 @CrossOrigin
 @PutMapping("/message")

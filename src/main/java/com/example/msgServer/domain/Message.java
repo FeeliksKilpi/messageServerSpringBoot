@@ -1,14 +1,18 @@
 package com.example.msgServer.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-// Class is and entity
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+// Class is an entity
 @Entity
 // Class name is table name also
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "messageId")*/
 @Table
 public class Message {
     @Id
@@ -19,8 +23,11 @@ public class Message {
     private String messageText;
     @Column
     private String messageColor;
-    @Column
-    private String messageChannel;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn
+    private Channel messageChannel;
     @Column
     private String messageHashtag;
     @Column
@@ -32,7 +39,7 @@ public class Message {
 
     }
 
-    public Message(String messageText, String messageColor, String messageChannel, String messageHashtag,
+    public Message(String messageText, String messageColor, Channel messageChannel, String messageHashtag,
             String messageLocation, int messageLikes) {
         super();
         this.setMessageText(messageText);
@@ -67,10 +74,10 @@ public class Message {
     public void setMessageHashtag(String messageHashtag) {
         this.messageHashtag = messageHashtag;
     }
-    public String getMessageChannel() {
+    public Channel getMessageChannel() {
         return messageChannel;
     }
-    public void setMessageChannel(String messageChannel) {
+    public void setMessageChannel(Channel messageChannel) {
         this.messageChannel = messageChannel;
     }
     public String getMessageColor() {
