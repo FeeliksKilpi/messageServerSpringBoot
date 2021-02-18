@@ -36,16 +36,17 @@ public void delete(long id) {
 }
 
 // Update
-public void update(Message message, long messageId) {
+public Message update(Message message) {
     msgRepo.save(message);
+    return message;
 }
 
 // Upvote message
-public void upvote(Message message, long messageId) {
-    //Message likedMessage = new Message();
-
-    message.setMessageLikes(message.getMessageLikes() + 1);
-    msgRepo.save(message);
+public void upvote(long messageId) {
+    Message upvoteMessage = new Message();
+    upvoteMessage = msgRepo.findById(messageId).get();
+    upvoteMessage.setMessageLikes(upvoteMessage.getMessageLikes() + 1);
+    msgRepo.save(upvoteMessage);
 }
 
 }

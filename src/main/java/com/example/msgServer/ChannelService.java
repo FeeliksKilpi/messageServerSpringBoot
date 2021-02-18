@@ -25,6 +25,10 @@ public List<Channel> getAllChannels() {
 public Channel getChannelById(long id) {
     return chrepo.findById(id).get();
 }
+// Get channel by ID
+public Channel getChannelByName(String name) {
+    return chrepo.findByChannelName(name).get(0);
+}
 
 // Save or update a channels attributes
 public void saveOrUpdate(Channel channel) {

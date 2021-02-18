@@ -60,9 +60,9 @@ private long saveMessage(@RequestBody Message message) {
 
 // UPVOTE
 @CrossOrigin
-@PostMapping("/upvote/{messageId}")
-private void upvote(@RequestBody Message message, @PathVariable("messageId") long messageId) {
-  messageService.upvote(message, messageId);
+@PutMapping("/upvote")
+private Message upvote(@RequestBody Message message) {
+  return messageService.update(message);
 }
 
 // Put mapping that updates message detail
@@ -72,6 +72,7 @@ private Message update(@RequestBody Message message) {
   messageService.saveOrUpdate(message);
   return message;
 }
+
 
   /*
 Try post with curl:

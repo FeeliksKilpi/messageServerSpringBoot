@@ -24,20 +24,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ChannelController {
     @Autowired
     ChannelService channelService;
-
-    // Get mapping to list all messages
+    // Get mapping to list all channels
 @CrossOrigin
 @GetMapping("/channels")
 private List<Channel> getAllChannels() {
   return channelService.getAllChannels();
 }
 
-// Get mapping to output spesific message
+// Get mapping to show spesific Channel by ID
 @CrossOrigin
 @GetMapping("/channel/{channelId}")
 private Channel getChannel(@PathVariable("channelId") long channelId) {
   return channelService.getChannelById(channelId);
 }
+
+// Get mapping to show spesific Channel by name
+@CrossOrigin
+@GetMapping("/channelbyname/{channelName}")
+private Channel getChannel(@PathVariable("channelName") String channelName) {
+    return channelService.getChannelByName(channelName);
+}
+
+
 
 // Delete mapping
 @CrossOrigin
