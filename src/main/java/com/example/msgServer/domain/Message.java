@@ -1,5 +1,5 @@
 package com.example.msgServer.domain;
-
+import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,8 +30,12 @@ public class Message {
     private Channel messageChannel;
     @Column
     private String messageHashtag;
-    @Column
-    private String messageLocation;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn
+    private Location messageLocation;
+
     @Column
     private int messageLikes;
 
@@ -40,7 +44,7 @@ public class Message {
     }
 
     public Message(String messageText, String messageColor, Channel messageChannel, String messageHashtag,
-            String messageLocation, int messageLikes) {
+            Location messageLocation, int messageLikes) {
         super();
         this.setMessageText(messageText);
         this.setMessageColor(messageColor);
@@ -86,10 +90,10 @@ public class Message {
     public void setMessageColor(String messageColor) {
         this.messageColor = messageColor;
     }
-    public String getMessageLocation() {
+    public Location getMessageLocation() {
         return messageLocation;
     }
-    public void setMessageLocation(String messageLocation) {
+    public void setMessageLocation(Location messageLocation) {
         this.messageLocation = messageLocation;
     }
 
