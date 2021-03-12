@@ -2,10 +2,7 @@ package com.example.msgServer.domain;
 import java.util.List;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 // Class is an entity
 @Entity
@@ -32,7 +29,10 @@ public class Message {
     private String messageHashtag;
 
     @ManyToOne
-    @JsonManagedReference
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = )
+    //@JsonIgnoreProperties("messages")
+    //@JsonManagedReference
+    //@JsonBackReference
     @JoinColumn
     private Location messageLocation;
 
